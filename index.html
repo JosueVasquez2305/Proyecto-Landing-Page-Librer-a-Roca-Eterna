@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Librería y Bazar Roca Eterna — Todo lo que necesitás, en un solo lugar. Librería, electrónica, belleza y artículos del hogar." />
+  <meta property="og:title" content="Librería y Bazar Roca Eterna" />
+  <meta property="og:description" content="Todo lo que necesitás, en un solo lugar. Librería, electrónica, belleza y artículos del hogar." />
+  <meta property="og:type" content="website" />
+
+  <!-- Preconexión a Google Fonts para mejorar rendimiento -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Inter: tipografía base — Playfair Display: tipografía de títulos -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+
+  <title>Librería y Bazar Roca Eterna</title>
+</head>
+<body>
+
+  <!-- ============================================================
+       HEADER / NAVEGACIÓN PRINCIPAL
+       ============================================================ -->
+  <header id="header">
+    <nav id="main-nav" aria-label="Navegación principal">
+      <a href="#inicio" class="logo">
+        <img src="img/logo.png" alt="Librería y Bazar Roca Eterna" class="logo-img" />
+      </a>
+      <button class="hamburger" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menú de navegación">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#categorias">Categorías</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+  <!-- FIN HEADER -->
+
+  <main>
+
+    <!-- ============================================================
+         SECCIÓN INICIO — Hero
+         ============================================================ -->
+    <section id="inicio" aria-labelledby="hero-title">
+      <div class="container hero-content">
+        <img src="img/logo.png" alt="Librería y Bazar Roca Eterna" class="hero-logo" />
+        <h1 id="hero-title">Librería y Bazar Roca Eterna</h1>
+        <p class="hero-slogan">Todo lo que necesitás, en un solo lugar</p>
+        <a href="#categorias" class="cta-button">Ver categorías</a>
+      </div>
+    </section>
+    <!-- FIN SECCIÓN INICIO -->
+
+    <!-- ============================================================
+         SECCIÓN CATEGORÍAS
+         ============================================================ -->
+    <section id="categorias" aria-labelledby="categorias-title">
+      <div class="container">
+        <h2 id="categorias-title">Nuestras Categorías</h2>
+        <div class="cards-grid" id="cards-grid">
+          <!-- Las tarjetas se renderizan aquí por script.js a partir de CONFIG.categorias -->
+        </div>
+      </div>
+    </section>
+    <!-- FIN SECCIÓN CATEGORÍAS -->
+
+    <!-- ============================================================
+         SECCIÓN NOSOTROS
+         ============================================================ -->
+    <section id="nosotros" aria-labelledby="nosotros-title">
+      <div class="container nosotros-grid">
+        <div class="nosotros-text">
+          <h2 id="nosotros-title">Nosotros</h2>
+          <p id="nosotros-descripcion">
+            <!-- Descripción inyectada por script.js desde CONFIG.negocio.descripcion -->
+          </p>
+          <!-- Foto del negocio -->
+          <img
+            src="img/about.jpeg"
+            alt="Interior de Librería y Bazar Roca Eterna"
+            class="nosotros-foto"
+          />
+        </div>
+        <div class="nosotros-info">
+          <h3>Horario de atención</h3>
+          <p id="nosotros-horario"><!-- Inyectado por script.js --></p>
+          <h3>Dirección</h3>
+          <address id="nosotros-direccion"><!-- Inyectado por script.js --></address>
+        </div>
+      </div>
+    </section>
+    <!-- FIN SECCIÓN NOSOTROS -->
+
+    <!-- ============================================================
+         SECCIÓN CONTACTO
+         ============================================================ -->
+    <section id="contacto" aria-labelledby="contacto-title">
+      <div class="container contacto-grid">
+
+        <!-- Formulario de contacto -->
+        <div class="contacto-form-wrapper">
+          <h2 id="contacto-title">Contacto</h2>
+          <form id="contact-form" novalidate>
+            <div class="form-group">
+              <label for="nombre">Nombre <span aria-hidden="true">*</span></label>
+              <input type="text" id="nombre" name="nombre" autocomplete="name" required />
+              <span class="error-msg" role="alert"></span>
+            </div>
+            <div class="form-group">
+              <label for="telefono">Teléfono</label>
+              <input type="tel" id="telefono" name="telefono" autocomplete="tel" />
+              <span class="error-msg" role="alert"></span>
+            </div>
+            <div class="form-group">
+              <label for="mensaje">Mensaje <span aria-hidden="true">*</span></label>
+              <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
+              <span class="error-msg" role="alert"></span>
+            </div>
+            <button type="submit" class="btn-submit">Enviar mensaje</button>
+            <div id="form-confirmation" role="status" aria-live="polite"></div>
+          </form>
+        </div>
+
+        <!-- Información de contacto -->
+        <div class="contacto-info">
+          <h3>Información de contacto</h3>
+          <p>
+            <strong>Teléfono:</strong>
+            <a id="contacto-telefono-link" href="#"><!-- Inyectado por script.js --></a>
+          </p>
+          <p>
+            <strong>Email:</strong>
+            <a id="contacto-email-link" href="#"><!-- Inyectado por script.js --></a>
+          </p>
+          <address id="contacto-direccion"><!-- Inyectado por script.js --></address>
+
+          <!-- Mapa de ubicación -->
+          <div class="mapa-wrapper">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d288.2375815490573!2d-89.12123960505723!3d13.59392948244032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f6335a677309765%3A0xdb80daa5361864a!2sLibreria%20y%20Bazar%20%22Roca%20Eterna%22!5e0!3m2!1ses!2ssv!4v1783558201647!5m2!1ses!2ssv"
+              width="100%"
+              height="280"
+              style="border:0;"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="strict-origin-when-cross-origin"
+              title="Ubicación de Librería y Bazar Roca Eterna"
+              aria-label="Mapa de ubicación del negocio">
+            </iframe>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <!-- FIN SECCIÓN CONTACTO -->
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer id="footer">
+    <div class="container footer-content">
+      <p class="footer-brand">Librería y Bazar Roca Eterna</p>
+      <p class="footer-copy">© <span id="footer-year"></span> Todos los derechos reservados.</p>
+      <nav class="footer-nav" aria-label="Navegación del pie de página">
+        <ul>
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#categorias">Categorías</a></li>
+          <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+      <div class="footer-social">
+        <a id="footer-facebook" href="#" target="_blank" rel="noopener noreferrer" aria-label="Facebook de Roca Eterna">
+          <!-- Icono Facebook (SVG inline) -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+          </svg>
+        </a>
+        <a id="footer-tiktok" href="#" target="_blank" rel="noopener noreferrer" aria-label="TikTok de Roca Eterna">
+          <!-- Icono TikTok (SVG inline) -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.79 1.54V6.78a4.85 4.85 0 0 1-1.02-.09z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+  <!-- FIN FOOTER -->
+
+  <!-- ============================================================
+       BOTÓN FLOTANTE DE WHATSAPP
+       ============================================================ -->
+  <a id="whatsapp-btn"
+     href="#"
+     target="_blank"
+     rel="noopener noreferrer"
+     aria-label="Contactar por WhatsApp">
+    <!-- Icono WhatsApp (SVG inline) -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+    </svg>
+  </a>
+  <!-- FIN BOTÓN WHATSAPP -->
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>

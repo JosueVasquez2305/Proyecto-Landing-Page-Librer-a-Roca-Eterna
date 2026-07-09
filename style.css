@@ -1,0 +1,797 @@
+/* ================================================================
+   LIBRERÍA Y BAZAR ROCA ETERNA — Hoja de estilos principal
+   Arquitectura: mobile-first (base 320px → 768px → 992px)
+   ================================================================ */
+
+/* ----------------------------------------------------------------
+   1. VARIABLES CSS — Editar aquí para cambiar colores y tipografías
+   ---------------------------------------------------------------- */
+:root {
+  /* --- Paleta de colores --- */
+  --color-primary:        #1E3A5F;  /* Azul marino — nav, botones primarios */
+  --color-primary-dark:   #152B46;  /* Hover de elementos primarios */
+  --color-secondary:      #2E9FAE;  /* Turquesa Roca Eterna — CTA, acentos */
+  --color-secondary-dark: #247F8C;  /* Hover del CTA */
+  --color-bg:             #F8F5F0;  /* Fondo general — blanco cálido */
+  --color-surface:        #FFFFFF;  /* Fondo de tarjetas y formulario */
+  --color-text:           #1A1A2E;  /* Texto principal (contraste ≥ 4.5:1) */
+  --color-text-muted:     #5A5A72;  /* Texto secundario / descriptivo */
+  --color-border:         #D9D3C8;  /* Bordes y separadores */
+  --color-whatsapp:       #25D366;  /* Botón flotante WhatsApp */
+  --color-accent:         #E8A020;  /* Ámbar dorado — botón CTA, detalles cálidos */
+  --color-accent-dark:    #C8881A;  /* Hover del botón CTA */
+  --color-error:          #C0392B;  /* Mensajes de error del formulario */
+  --color-success:        #27AE60;  /* Mensaje de confirmación del formulario */
+
+  /* --- Tipografías ---
+     Cambiar el nombre de la fuente aquí afecta todo el sitio.
+     Las fuentes de Google Fonts se cargan en index.html. */
+  --font-base:    'Inter', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Playfair Display', Georgia, serif;
+
+  /* --- Escala tipográfica --- */
+  --font-size-base: 16px;
+  --font-size-sm:   14px;
+  --font-size-lg:   18px;
+  --font-size-xl:   24px;
+  --font-size-2xl:  32px;
+  --font-size-3xl:  48px;
+
+  /* --- Altura de línea --- */
+  --line-height-base:    1.6;
+  --line-height-heading: 1.2;
+
+  /* --- Espaciado (sistema de 4px) ---
+     xs=4 | sm=8 | md=16 | lg=24 | xl=48 | 2xl=80 */
+  --spacing-xs:  4px;
+  --spacing-sm:  8px;
+  --spacing-md:  16px;
+  --spacing-lg:  24px;
+  --spacing-xl:  48px;
+  --spacing-2xl: 80px;
+
+  /* --- Layout --- */
+  --container-max:    1200px;  /* Ancho máximo del contenido en desktop */
+  --section-padding:  clamp(40px, 8vw, 80px);  /* Padding vertical adaptable */
+
+  /* --- Breakpoints (documentados como referencia; usarlos en media queries) ---
+     Tablet  : min-width: 768px
+     Desktop : min-width: 992px */
+
+  /* --- Transiciones --- */
+  --transition-fast: 0.2s ease;
+  --transition-base: 0.25s ease;
+
+  /* --- Sombras --- */
+  --shadow-sm:  0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md:  0 4px 16px rgba(0, 0, 0, 0.12);
+  --shadow-lg:  0 8px 24px rgba(0, 0, 0, 0.16);
+
+  /* --- Border radius --- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+}
+
+/* ----------------------------------------------------------------
+   2. RESET Y ESTILOS GLOBALES BASE
+   ---------------------------------------------------------------- */
+
+/* Box model universal: padding y border incluidos en el tamaño total */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Reset de márgenes y paddings */
+html,
+body,
+h1, h2, h3, h4, h5, h6,
+p, ul, ol, li,
+figure, figcaption,
+blockquote, dl, dd {
+  margin: 0;
+  padding: 0;
+}
+
+/* Configuración base del documento */
+html {
+  font-size: var(--font-size-base);  /* 16px — base para unidades rem */
+  scroll-behavior: smooth;           /* Smooth scroll nativo como fallback */
+  -webkit-text-size-adjust: 100%;    /* Prevenir ajuste automático en iOS */
+}
+
+body {
+  font-family: var(--font-base);
+  font-size: var(--font-size-base);  /* mínimo 16px según Req 7.4 */
+  line-height: var(--line-height-base);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  min-width: 320px;  /* Soporte mínimo: 320px según Req 7.1 */
+  overflow-x: hidden;
+}
+
+/* Listas sin estilo por defecto en navegación */
+ul, ol {
+  list-style: none;
+}
+
+/* Imágenes responsivas */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Herencia de fuente en formularios */
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* Evitar overflow de texto largo */
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/* Estilo de foco visible para accesibilidad con teclado (Req 8.6)
+   Doble capa: outline azul primario + box-shadow blanco interior.
+   Garantiza contraste ≥ 3:1 sobre cualquier fondo (claro u oscuro). */
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.85);
+}
+
+/* ----------------------------------------------------------------
+   3. CLASE CONTENEDOR
+   Centra el contenido y limita el ancho máximo (Req 7.5)
+   ---------------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--container-max);  /* 1200px */
+  margin-inline: auto;              /* Centrado horizontal */
+  padding-inline: var(--spacing-md);
+}
+
+/* En tablet y desktop se incrementa el padding lateral */
+@media (min-width: 768px) {
+  .container {
+    padding-inline: var(--spacing-lg);
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    padding-inline: var(--spacing-xl);
+  }
+}
+
+/* ----------------------------------------------------------------
+   4. TIPOGRAFÍA — Estilos base de encabezados
+   ---------------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  line-height: var(--line-height-heading);
+  color: var(--color-text);
+}
+
+h1 { font-size: clamp(var(--font-size-2xl), 6vw, var(--font-size-3xl)); }
+h2 { font-size: clamp(var(--font-size-xl), 4vw, var(--font-size-2xl)); }
+h3 { font-size: var(--font-size-xl); }
+
+/* Separación entre secciones de heading y contenido */
+h2, h3 {
+  margin-bottom: var(--spacing-lg);
+}
+
+/* ----------------------------------------------------------------
+   5. ENLACES
+   ---------------------------------------------------------------- */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-primary-dark);
+}
+
+/* ----------------------------------------------------------------
+   6. HEADER Y NAVEGACIÓN
+   ---------------------------------------------------------------- */
+#header {
+  position: relative;  /* Móvil: sin sticky (Req 1.5) */
+  z-index: 100;
+  background-color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+/* En tablet/desktop el header se vuelve sticky al hacer scroll (via JS) */
+@media (min-width: 768px) {
+  #header {
+    position: sticky;
+    top: 0;
+  }
+}
+
+#main-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md) var(--spacing-lg);
+  max-width: var(--container-max);
+  margin-inline: auto;
+}
+
+/* Logo en el nav */
+.logo-img {
+  height: 80px;
+  width: auto;
+  display: block;
+  background-color: rgba(255, 255, 255, 0.92);
+  border-radius: 50%;
+  padding: 2px;
+}
+
+/* Logo en el hero — grande, con fondo blanco para legibilidad del slogan */
+.hero-logo {
+  width: 280px;
+  height: auto;
+  display: block;
+  background-color: rgba(255, 255, 255, 0.92);
+  border-radius: 50%;
+  padding: 6px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+@media (min-width: 768px) {
+  .hero-logo {
+    width: 340px;
+    padding: 8px;
+  }
+}
+
+.logo:hover {
+  color: var(--color-secondary);
+}
+
+/* Botón hamburguesa — solo visible en móvil */
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.hamburger-line {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-surface);
+  border-radius: 2px;
+  transition: transform var(--transition-base), opacity var(--transition-base);
+}
+
+/* Estado abierto del hamburguesa */
+.hamburger[aria-expanded="true"] .hamburger-line:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+
+.hamburger[aria-expanded="true"] .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger[aria-expanded="true"] .hamburger-line:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+/* Links de navegación — en móvil: menú colapsado */
+.nav-links {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: var(--color-primary-dark);
+  padding: var(--spacing-md) 0;
+  box-shadow: var(--shadow-md);
+}
+
+.nav-links.open {
+  display: flex;
+}
+
+.nav-links li a {
+  display: block;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  color: var(--color-surface);
+  font-size: var(--font-size-base);
+  transition: background-color var(--transition-fast);
+}
+
+.nav-links li a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--color-secondary);
+}
+
+/* --- Tablet y desktop: nav horizontal, sin hamburguesa --- */
+@media (min-width: 768px) {
+  .hamburger {
+    display: none;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-direction: row;
+    position: static;
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+    gap: var(--spacing-sm);
+  }
+
+  .nav-links li a {
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-sm);
+  }
+}
+
+/* ----------------------------------------------------------------
+   7. SECCIÓN HERO (INICIO)
+   ---------------------------------------------------------------- */
+#inicio {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-primary);
+  background-image: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  text-align: center;
+  padding-block: var(--section-padding);
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+#inicio h1 {
+  color: var(--color-surface);
+  font-size: clamp(var(--font-size-xl), 7vw, var(--font-size-3xl));  /* Req 2.5 */
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.hero-slogan {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: clamp(var(--font-size-base), 3vw, var(--font-size-lg));
+  max-width: 480px;
+}
+
+/* Botón CTA */
+.cta-button {
+  display: inline-block;
+  background-color: var(--color-accent);
+  color: var(--color-text);
+  font-size: clamp(var(--font-size-base), 2.5vw, var(--font-size-lg));  /* Req 2.6 */
+  font-weight: 600;
+  padding: var(--spacing-md) var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  transition: background-color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
+  box-shadow: var(--shadow-md);
+}
+
+.cta-button:hover,
+.cta-button:focus-visible {
+  background-color: var(--color-accent-dark);
+  color: var(--color-text);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ----------------------------------------------------------------
+   8. SECCIÓN CATEGORÍAS
+   ---------------------------------------------------------------- */
+#categorias {
+  padding-block: var(--section-padding);
+  background-color: var(--color-bg);
+}
+
+#categorias h2 {
+  text-align: center;
+}
+
+/* Grid de tarjetas: 1 columna en móvil */
+.cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-xl);
+}
+
+/* 2 columnas en tablet (Req 3.3) */
+@media (min-width: 768px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 4 columnas en desktop */
+@media (min-width: 992px) {
+  .cards-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Tarjeta de categoría */
+.product-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-xl) var(--spacing-lg);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+/* Efecto hover de elevación (Req 3.5) */
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+.card-icon {
+  font-size: 3rem;
+  margin-bottom: var(--spacing-md);
+  line-height: 1;
+}
+
+.card-title {
+  font-size: var(--font-size-lg);
+  font-family: var(--font-heading);
+  color: var(--color-secondary);  /* Turquesa del logo */
+  margin-bottom: var(--spacing-sm);
+}
+
+.card-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-base);
+}
+
+/* ----------------------------------------------------------------
+   9. SECCIÓN NOSOTROS
+   ---------------------------------------------------------------- */
+#nosotros {
+  padding-block: var(--section-padding);
+  background-color: var(--color-surface);
+}
+
+.nosotros-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-xl);
+}
+
+/* 2 columnas en desktop (Req 4.4) */
+@media (min-width: 992px) {
+  .nosotros-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+  }
+}
+
+.nosotros-text p {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+}
+
+/* Foto del negocio en la sección Nosotros */
+.nosotros-foto {
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  margin-top: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.nosotros-info h3 {
+  font-size: var(--font-size-lg);
+  color: var(--color-secondary);  /* Turquesa del logo */
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-sm);
+}
+
+.nosotros-info h3:first-child {
+  margin-top: 0;
+}
+
+.nosotros-info p,
+.nosotros-info address {
+  color: var(--color-text-muted);
+  font-style: normal;
+  line-height: var(--line-height-base);
+}
+
+/* ----------------------------------------------------------------
+   10. SECCIÓN CONTACTO
+   ---------------------------------------------------------------- */
+#contacto {
+  padding-block: var(--section-padding);
+  background-color: var(--color-bg);
+}
+
+.contacto-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-xl);
+}
+
+@media (min-width: 992px) {
+  .contacto-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+  }
+}
+
+/* Formulario */
+#contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-size: var(--font-size-base);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(44, 95, 138, 0.2);
+}
+
+/* :focus-visible explícito en campos de formulario y botón (Req 8.6)
+   Restaura el outline visible cuando la navegación es por teclado,
+   compensando el outline:none definido en :focus arriba. */
+.form-group input:focus-visible,
+.form-group textarea:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.85), 0 0 0 3px rgba(44, 95, 138, 0.2);
+}
+
+/* Estado de error en campo */
+.form-group input.error,
+.form-group textarea.error {
+  border-color: var(--color-error);
+}
+
+.error-msg {
+  font-size: var(--font-size-sm);
+  color: var(--color-error);
+  min-height: 1.2em;  /* Reservar espacio para evitar layout shifts */
+}
+
+.btn-submit {
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  padding: var(--spacing-md) var(--spacing-xl);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background-color var(--transition-base), transform var(--transition-base);
+}
+
+.btn-submit:hover,
+.btn-submit:focus-visible {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-2px);
+}
+
+#form-confirmation {
+  padding: var(--spacing-md);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+#form-confirmation.success {
+  background-color: rgba(39, 174, 96, 0.12);
+  color: #1B7040;  /* Verde oscurecido para contraste ≥ 4.5:1 sobre fondo rgba(39,174,96,0.12) — ratio ≈ 4.89:1 */
+  border: 1px solid var(--color-success);
+}
+
+/* Información de contacto */
+.contacto-info h3 {
+  font-size: var(--font-size-lg);
+  color: var(--color-secondary);  /* Turquesa del logo */
+  margin-bottom: var(--spacing-lg);
+}
+
+.contacto-info p {
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text-muted);
+}
+
+.contacto-info address {
+  font-style: normal;
+  color: var(--color-text-muted);
+  line-height: var(--line-height-base);
+  margin-top: var(--spacing-md);
+}
+
+.contacto-info a {
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.contacto-info a:hover {
+  color: var(--color-secondary-dark);
+  text-decoration: underline;
+}
+
+/* Mapa de ubicación */
+.mapa-wrapper {
+  margin-top: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.mapa-wrapper iframe {
+  display: block;
+  width: 100%;
+}
+
+/* ----------------------------------------------------------------
+   11. FOOTER
+   ---------------------------------------------------------------- */
+#footer {
+  background-color: var(--color-primary-dark);
+  color: rgba(255, 255, 255, 0.85);
+  padding-block: var(--spacing-xl);
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-lg);
+  text-align: center;
+}
+
+.footer-brand {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-lg);
+  color: var(--color-surface);
+  font-weight: 700;
+}
+
+.footer-copy {
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* Navegación del footer */
+.footer-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-md);
+}
+
+.footer-nav a {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: var(--font-size-sm);
+  transition: color var(--transition-fast);
+}
+
+.footer-nav a:hover {
+  color: var(--color-secondary);
+}
+
+/* Redes sociales */
+.footer-social {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.footer-social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--color-surface);
+  transition: background-color var(--transition-base), color var(--transition-base);
+}
+
+.footer-social a:hover {
+  background-color: var(--color-secondary);
+  color: var(--color-text);
+}
+
+/* ----------------------------------------------------------------
+   12. BOTÓN FLOTANTE DE WHATSAPP
+   ---------------------------------------------------------------- */
+#whatsapp-btn {
+  position: fixed;
+  bottom: var(--spacing-lg);
+  right: var(--spacing-lg);
+  z-index: 9999;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: var(--color-whatsapp);
+  color: var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+#whatsapp-btn:hover,
+#whatsapp-btn:focus-visible {
+  transform: scale(1.1);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+  color: var(--color-surface);
+}
+
+/* ----------------------------------------------------------------
+   13. UTILIDADES
+   ---------------------------------------------------------------- */
+
+/* Ocultar visualmente pero mantener para lectores de pantalla */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
