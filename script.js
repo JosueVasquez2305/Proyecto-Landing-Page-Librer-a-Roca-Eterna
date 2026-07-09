@@ -322,12 +322,12 @@ function initForm() {
   if (!form) return;
 
   form.addEventListener('submit', function (event) {
-    event.preventDefault();
+    event.preventDefault(); // Detiene el envío nativo para validar primero
 
     const nombreInput  = form.querySelector('#nombre');
     const mensajeInput = form.querySelector('#mensaje');
 
-    // Validar ambos campos antes de combinar (evita short-circuit que oculte errores)
+    // Validar ambos campos antes de combinar
     const nombreValido  = validateRequired(nombreInput,  'El nombre es requerido.');
     const mensajeValido = validateRequired(mensajeInput, 'El mensaje es requerido.');
     const isValid = nombreValido && mensajeValido;
@@ -339,14 +339,43 @@ function initForm() {
       return;
     }
 
-    // Envío exitoso: mostrar confirmación y limpiar formulario
+    // --- NUEVO: ENVIAR DATOS A FORMSPREE EN SEGUNDO PLANO ---
+    // Recoge la URL que pusiste en el 'action' de tu HTML automáticamente
+    const formAction = form.getAttribute('action'); 
+    const formData = new FormData(form);
+
     if (confirmation) {
-      confirmation.textContent = '¡Gracias por tu mensaje! Nos pondremos en contacto a la brevedad.';
-      confirmation.className = 'success';
-      confirmation.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      confirmation.textContent = 'Enviando mensaje...';
+      confirmation.className = 'info'; // Cambia temporalmente el estado visual
     }
 
-    form.reset();
+    fetch(formAction, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+        // Envío exitoso: mostrar confirmación y limpiar formulario
+        if (confirmation) {
+          confirmation.textContent = '¡Gracias por tu mensaje! Nos pondremos en contacto a la brevedad.';
+          confirmation.className = 'success';
+          confirmation.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        form.reset();
+      } else {
+        // Por si pasa algún problema con el servidor de Formspree
+        throw new Error('Error en el servidor');
+      }
+    })
+    .catch(error => {
+      if (confirmation) {
+        confirmation.textContent = 'Hubo un problema al enviar tu mensaje. Por favor, intenta de nuevo.';
+        confirmation.className = 'error';
+      }
+    });
   });
 
   // Limpiar error al editar cada campo
