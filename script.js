@@ -26,7 +26,7 @@ const CONFIG = {
    */
   negocio: {
     nombre:      'Librería y Bazar Roca Eterna',
-    eslogan:     'Siempre contigo',
+    eslogan:     'Siempre contigo'
     descripcion: 'Somos un negocio familiar con años de trayectoria en el barrio. '
                 + 'Ofrecemos una amplia variedad de productos: desde útiles escolares '
                 + 'y artículos de oficina, hasta electrónica, belleza y artículos del hogar. '
