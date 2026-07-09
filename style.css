@@ -499,7 +499,7 @@ a:hover {
 /* Foto del negocio en la sección Nosotros */
 .nosotros-foto {
   width: 100%;
-  max-width: 480px;
+  max-width: 250px;
   height: auto;
   object-fit: contain;
   border-radius: var(--radius-md);
