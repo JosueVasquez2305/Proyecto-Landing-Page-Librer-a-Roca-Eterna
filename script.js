@@ -44,7 +44,7 @@ const CONFIG = {
   contacto: {
     telefono:     '+503 78147401',
     telefonoHref: '+50378147401',
-    email:        'rocaeterna@ejemplo.com',
+    email:        'vreportillo@gmail.com',
     direccion:    'Km 19 1/2 carretera antigua a zacatecoluca, Olocuilta, La Paz',
     horario:      'Domingo a Domingo: 8:00 – 20:00'
   },
